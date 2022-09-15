@@ -13,9 +13,10 @@ file = 'config.ini'
 config = ConfigParser(interpolation=None)
 config.read(file)
 
-def sql(sql_statement):
+
+def sql(sql_statement)->pd.read_sql:
     username = str(config['credentials']['user'])
-    password = str(config['credentials']['password']    )
+    password = str(config['credentials']['password_db']    )
     server_ip = str(config['db']['server_ip'])
     engine = sqlalchemy.create_engine(
     f"mysql+pymysql://{username}:{password}@{server_ip}/Registration")
@@ -23,7 +24,7 @@ def sql(sql_statement):
                        con=engine
                        )
 
-def check_que():
+def check_que()->None:
     global que
     if sql('SELECT * FROM registration').empty:
         if debug == True:
@@ -34,8 +35,8 @@ def check_que():
             print("df is not empty" +"\n" + "going to work!")
         que = True
 
-def fetch_first():
-    return sql('SELECT * FROM registration LIMIT 1')
+#  def fetch_first():
+#      return sql('SELECT * FROM registration LIMIT 1')
 
 class user:
   def __init__(self, username, name, mail, comment, timestamp):
@@ -45,7 +46,7 @@ class user:
     self.comment = comment
     self.timestamp = timestamp
 
-def fetch_first():
+def fetch_first()->None:
     global user1
     username = str(sql('SELECT * FROM registration LIMIT 1')['reg_username']).strip("0 ").partition('\n')[0]
     mail = str(sql('SELECT * FROM registration LIMIT 1')['reg_mail']).strip("0 ").partition('\n')[0]
@@ -56,7 +57,7 @@ def fetch_first():
     user1 = user(username, name, mail, comment, timestamp)
     
 
-def main():
+def main()->None:
     fetch_first()
     
     check_que()
