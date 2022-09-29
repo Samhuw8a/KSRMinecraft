@@ -7,6 +7,8 @@ import pandas as pd
 import time
 from configparser import ConfigParser
 import subprocess
+import asyncio
+import websockets
 
 
 file = 'config.ini'
@@ -56,6 +58,15 @@ def fetch_first()->None:
 
     user1 = user(username, name, mail, comment, timestamp)
     
+async def send_message(info: str)-> str:
+    """Basic websocket client that sends Token information"""
+    uri = str(config['global parameters']['websocket_uri'])
+    async with websockets.connect(uri) as websocket:
+        await websocket.send(info)
+        print(f"sending tocken info: {info}")
+        resp:str =  await websocket.recv()
+        print(f"Server response: {resp}")
+    return resp
 
 def main()->None:
     fetch_first()
@@ -79,10 +90,10 @@ def main()->None:
                 registration_state = r.splitlines()[-1]
                 if registration_state == "registraion_successful":
                     print("sending success notification")
-                    # Websocket_send(...)
+                    # send_message(...)
                 else:
                     print('sending error')                
-                    # Websocket_send(...)
+                    # send_message(...)
                 
             elif token_state == "token_failed":
                 print("send token error")
