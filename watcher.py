@@ -79,11 +79,14 @@ def main()->None:
                 registration_state = r.splitlines()[-1]
                 if registration_state == "registraion_successful":
                     print("sending success notification")
+                    # Websocket_send(...)
                 else:
                     print('sending error')                
+                    # Websocket_send(...)
                 
             elif token_state == "token_failed":
                 print("send token error")
+                    # Websocket_send(...)
                 print('startin with clean_up')
                 
         else:
