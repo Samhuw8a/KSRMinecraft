@@ -16,7 +16,7 @@ config = ConfigParser(interpolation=None)
 config.read(file)
 
 
-def sql(sql_statement)->pd.read_sql:
+def sql(sql_statement :str)->pd.read_sql:
     username = str(config['credentials']['user'])
     password = str(config['credentials']['password_db']    )
     server_ip = str(config['db']['server_ip'])
@@ -75,7 +75,8 @@ def main()->None:
     if que == True:
         if debug == True:
             print("start registering...")
-            print(fetch_first())
+            #  print(fetch_first())
+            print(user1)
         if str(user1.mail)[-8:] == "@sluz.ch":
             if debug == True:
                 print('is sluz')
