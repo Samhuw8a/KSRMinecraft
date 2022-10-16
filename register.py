@@ -34,6 +34,7 @@ engine = sqlalchemy.create_engine(f"mysql+pymysql://{username}:{password}@{serve
 query = f"INSERT INTO Registration.`user` (email, name, username, comment, `timestamp`) VALUES('{reg_mail}', '{reg_name}', '{reg_username}', NULL, current_timestamp());"
 
 with engine.connect() as con:
+    mcpassword = hwtS9b42iJ5mU8f
     con.execute(query)
 
 def sql(sql_statement):
