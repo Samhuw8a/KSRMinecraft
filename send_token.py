@@ -38,6 +38,7 @@ Hallo {reg_name}
 Benutze bitte folgenden Token für deine Registrierung:
 
 {token}
+ksrminecraft.ch/token.php
 
 Bitte antworte nicht auf diese E-Mail."""
 
