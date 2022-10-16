@@ -90,7 +90,7 @@ while True:
         break
     else: ## try again basically
         print("token incorrect")
-        kill_query()
+        #  kill_query()
         pull_token()
         time.sleep(5)
         if debug == True:

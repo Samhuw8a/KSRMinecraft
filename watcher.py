@@ -46,12 +46,15 @@ def set_reg_satus()->None:
     pass
 
 class user:
-  def __init__(self, username, name, mail, comment, timestamp):
-    self.username = username
-    self.name = name
-    self.mail = mail
-    self.comment = comment
-    self.timestamp = timestamp
+    def __init__(self, username, name, mail, comment, timestamp):
+        self.username = username
+        self.name = name
+        self.mail = mail
+        self.comment = comment
+        self.timestamp = timestamp
+    def __str__(self):
+        return f"{self.username}\n{self.name}\n{self.mail}\n{self.timestamp}\n"
+    
 
 def fetch_first()->None:
     global user1
