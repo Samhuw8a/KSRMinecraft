@@ -67,12 +67,16 @@ def query():
     return sql(f'SELECT token FROM registration WHERE reg_mail = \'{reg_mail}\' ')
 
 def pull_token():
+    counter=0
     while str(query()).split()[-1]=="None":
     #  if str(query()).split()[-1]=="None":
         time.sleep(5)
     #      pull_token()
     #      ## exit strategy
     #  else:
+        counter+=1
+        if counter >= 10:
+            break
     return str(query()).split()[-1].strip()
 
 ####################################
@@ -81,13 +85,13 @@ trial = 0
 
 timeout = time.time() + 5*60 ## time-out after 5 minutes
 while True:
-    if trial == 4 or time.time() > timeout: ## time-out after 3 trials
+    if trial == 20 or time.time() > timeout: ## time-out after 3 trials
         print('timeout or too many trials')
         print('sending tokern_failed.php message')
         print('execute clean_up.py')
         print('token_failed')
         break ## if breaking conditions are met, break loop
-    elif int(pull_token()) == token: ## if token is correct, send token_success
+    elif pull_token() == str(float(token)): ## if token is correct, send token_success
         print('sending success message.php')
         print("continue with registration.py")
         print('token_success')
