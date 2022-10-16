@@ -10,13 +10,14 @@ config.read(file)
 if len(sys.argv) > 1:
     debug = str(sys.argv[1])
     reg_username = str(sys.argv[2])
-    reg_name = str(sys.argv[3])
-    reg_mail = str(sys.argv[4])
+    reg_name = str(sys.argv[3]).replace("ä","ae").replace("ö","oe").replace("ü","ue")
+    reg_mail = str(sys.argv[4]).replace("ä","ae").replace("ö","oe").replace("ü","ue")
     token = str(sys.argv[5])
     if debug == "debug":
         debug = True
 else:
     debug = False
+
 
 ## define webserver ports for SMTP
 port = 465  # For SSL
