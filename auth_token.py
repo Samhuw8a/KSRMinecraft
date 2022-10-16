@@ -67,7 +67,7 @@ def query():
     return sql(f'SELECT token FROM registration WHERE reg_mail = \'{reg_mail}\' ')
 
 def pull_token():
-    if str(query())=="None":
+    if str(query()).split()[-1]=="None":
         time.sleep(5)
         pull_token()
         ## exit strategy
