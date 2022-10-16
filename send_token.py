@@ -39,6 +39,10 @@ Benutze bitte folgenden Token für deine Registrierung:
 
 Bitte antworte nicht auf diese E-Mail."""
 
+if debug:
+    print("SENDING:")
+    print(reg_mail)
+    print(token)
 ## Engine, that sends the mail. Problem: Potential Spam-Filter
 context = ssl.create_default_context()
 with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
