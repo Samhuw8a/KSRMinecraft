@@ -86,7 +86,7 @@ while True:
         print('execute clean_up.py')
         print('token_failed')
         break ## if breaking conditions are met, break loop
-    elif pull_token() == token: ## if token is correct, send token_success
+    elif int(pull_token()) == token: ## if token is correct, send token_success
         print('sending success message.php')
         print("continue with registration.py")
         print('token_success')
