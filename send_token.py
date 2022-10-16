@@ -1,6 +1,8 @@
 import smtplib, ssl
 import sys
 from configparser import ConfigParser
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 file = 'config.ini'
 config = ConfigParser(interpolation=None)
@@ -29,9 +31,8 @@ smtp_server = "cap.ssl.hosttech.eu"
 ## account is setup on webserver
 sender_email = "no_reply@ksrminecraft.ch"
 receiver_email = f"{reg_mail}" ## improted system variable
+subject = "Deine Registration bei KSRMinecraft"
 message = f"""\
-Subject: Deine Registration bei KSRMinecraft
-
 Hallo {reg_name}
 
 Benutze bitte folgenden Token für deine Registrierung:
@@ -44,11 +45,17 @@ if debug:
     print("SENDING:")
     print(reg_mail)
     print(token)
+msg=MIMEMultipart()
+msg["From"]    = sender_email
+msg["To"]      = receiver_email
+msg["Subject"] = subject
+msg.attach(MIMEText(message,"plain","utf-8"))
+text = msg.as_string()
 ## Engine, that sends the mail. Problem: Potential Spam-Filter
 context = ssl.create_default_context()
 with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
     server.login(sender_email, password)
-    server.sendmail(sender_email, receiver_email, message)
+    server.sendmail(sender_email, receiver_email, text)
 
 if debug:
     print("Sent email")
