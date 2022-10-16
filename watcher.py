@@ -28,7 +28,7 @@ def sql(sql_statement :str)->pd.read_sql:
 
 def check_que()->None:
     global que
-    if sql('SELECT * FROM registration').empty:
+    if sql('SELECT * FROM registration WHERE reg_done is Null').empty:
         if debug == True:
             print("que is empty" + "\n" + "going to sleep")
         que = False
@@ -40,6 +40,11 @@ def check_que()->None:
 #  def fetch_first():
 #      return sql('SELECT * FROM registration LIMIT 1')
 
+def set_reg_satus()->None:
+    #Schreibt reg_done parameter
+    sql(f"UPDATE registration SET reg_done = 1.0 WHERE reg_timestamp={user1.timestamp}")
+    pass
+
 class user:
   def __init__(self, username, name, mail, comment, timestamp):
     self.username = username
@@ -50,11 +55,12 @@ class user:
 
 def fetch_first()->None:
     global user1
-    username = str(sql('SELECT * FROM registration LIMIT 1')['reg_username']).strip("0 ").partition('\n')[0]
-    mail = str(sql('SELECT * FROM registration LIMIT 1')['reg_mail']).strip("0 ").partition('\n')[0]
-    name =  str(sql('SELECT * FROM registration LIMIT 1')['reg_name']).strip("0 ").partition('\n')[0]
-    comment = str(sql('SELECT * FROM registration LIMIT 1')['reg_comment']).strip("0 ").partition('\n')[0]
-    timestamp = str(sql('SELECT * FROM registration LIMIT 1')['reg_timestamp']).strip("0 ").partition('\n')[0]
+    check_str='SELECT * FROM registration Where reg_done is Null LIMIT 1'
+    username = str(sql(check_str)['reg_username']).strip("0 ").partition('\n')[0]
+    mail = str(sql(check_str)['reg_mail']).strip("0 ").partition('\n')[0]
+    name =  str(sql(check_str)['reg_name']).strip("0 ").partition('\n')[0]
+    comment = str(sql(check_str)['reg_comment']).strip("0 ").partition('\n')[0]
+    timestamp = str(sql(check_str)['reg_timestamp']).strip("0 ").partition('\n')[0]
 
     user1 = user(username, name, mail, comment, timestamp)
     
@@ -92,6 +98,7 @@ def main()->None:
                 if registration_state == "registraion_successful":
                     print("sending success notification")
                     # send_message(...)
+                    set_reg_satus()
                 else:
                     print('sending error')                
                     # send_message(...)
