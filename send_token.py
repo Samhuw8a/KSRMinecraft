@@ -1,5 +1,10 @@
 import smtplib, ssl
 import sys
+from configparser import ConfigParser
+
+file = 'config.ini'
+config = ConfigParser(interpolation=None)
+config.read(file)
 
 ## import system variables
 if len(sys.argv) > 1:

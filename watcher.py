@@ -86,11 +86,11 @@ def main()->None:
         if str(user1.mail)[-8:] == "@sluz.ch":
             if debug == True:
                 print('is sluz')
-            p = subprocess.check_output(['python', 'auth_token.py', str(debug), str(user1.name)])
+            p = subprocess.check_output(['python3', 'auth_token.py', str(debug), str(user1.username), str(user1.name), str (user1.mail)])
             p = p.decode('ascii')
             token_state = p.splitlines()[-1]
             if token_state == "token_success":
-                r = subprocess.check_output(['python', 'register.py', str(debug),
+                r = subprocess.check_output(['python3', 'register.py', str(debug),
                                   str(user1.username), str(user1.name),
                                   str(user1.mail)])
                 r = p.decode('ascii')

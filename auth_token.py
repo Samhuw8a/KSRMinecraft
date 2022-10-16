@@ -28,7 +28,7 @@ if len(sys.argv) > 1:
     reg_username = str(sys.argv[2])
     reg_name = str(sys.argv[3])
     reg_mail = str(sys.argv[4])
-    token = str(sys.argv[5])
+    #  token = str(sys.argv[5])
     if debug == "debug":
         debug = True
 else:
@@ -42,7 +42,7 @@ from random import randint
 token = randint(1000000, 999999999)
 
 ## send token and passing in variables needed by the 'send_token.py' process
-send = subprocess.Popen(['python', 'send_token.py', str(debug),
+send = subprocess.Popen(['python3', 'send_token.py', str(debug),
                                   str(reg_username), str(reg_name),
                                   str(reg_mail), str(token)])
 ## no response is needed. Wait for the process to finish.
