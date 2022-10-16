@@ -42,13 +42,16 @@ from random import randint
 token = randint(1000000, 999999999)
 
 ## send token and passing in variables needed by the 'send_token.py' process
+if debug == True:
+    print(f"sending token: {token} to {reg_name}")
+
 send = subprocess.Popen(['python3', 'send_token.py', str(debug),
                                   str(reg_username), str(reg_name),
                                   str(reg_mail), str(token)])
 ## no response is needed. Wait for the process to finish.
 send.wait()
 if debug == True:
-    print(f"sending token: {token} to {reg_name}")
+    print("Sent email")
 
 
 ## wait for response (3 tries in 5 minutes)
