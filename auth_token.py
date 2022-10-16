@@ -61,7 +61,7 @@ def dummy_pull_token():
         return token + 1
 
 def query():
-    return sql(f'SELECT token FROM registration WHERE reg_mail = {reg_mail} ')
+    return sql(f'SELECT token FROM registration WHERE reg_mail = \'{reg_mail}\' ')
 
 def pull_token():
     if query().empty:
