@@ -5,7 +5,7 @@ import time
 import subprocess
 import sqlalchemy
 from configparser import ConfigParser
-from pandas import read_sql as pd
+import pandas as pd
 
 ## parsing variables from config.ini
 file = 'config.ini'
