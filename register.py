@@ -27,7 +27,7 @@ if debug == True:
     print("register starting")
 
 username = str(config['credentials']['user'])
-password = str(config['credentials']['password'])
+password = str(config['credentials']['db_password'])
 server_ip = str(config['db']['server_ip'])
 mcpassword = str(config['credentials']['mcpassword'])
 engine = sqlalchemy.create_engine(f"mysql+pymysql://{username}:{password}@{server_ip}/Registration")
