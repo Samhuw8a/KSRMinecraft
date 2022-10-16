@@ -11,7 +11,7 @@ if len(sys.argv) > 1:
     debug = str(sys.argv[1])
     reg_username = str(sys.argv[2])
     reg_name = str(sys.argv[3]).replace("ä","ae").replace("ö","oe").replace("ü","ue")
-    reg_mail = str(sys.argv[4]).replace("ä","ae").replace("ö","oe").replace("ü","ue")
+    reg_mail = str(sys.argv[4])
     token = str(sys.argv[5])
     if debug == "debug":
         debug = True
@@ -40,10 +40,10 @@ Benutze bitte folgenden Token für deine Registrierung:
 
 Bitte antworte nicht auf diese E-Mail."""
 
-if debug:
-    print("SENDING:")
-    print(reg_mail)
-    print(token)
+#  if debug:
+#      print("SENDING:")
+#      print(reg_mail)
+#      print(token)
 ## Engine, that sends the mail. Problem: Potential Spam-Filter
 context = ssl.create_default_context()
 with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
