@@ -72,7 +72,7 @@ def pull_token():
         pull_token()
         ## exit strategy
     else:
-        return str(query()[-1])
+        return str(query()).split()[-1]
 
 ####################################
 
