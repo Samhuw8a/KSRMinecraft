@@ -7,10 +7,10 @@ config = ConfigParser(interpolation=None)
 config.read(file)
 
 def main()->None:
-    print(str(sql("SELECT * FROM registration WHERE reg_done is Null")))
-    #  print(str(sql("SELECT * FROM registration ")))
+    #  print(str(sql("SELECT * FROM registration WHERE reg_done is Null")))
+    print(str(sql("SELECT * FROM registration ")))
     print("-----"*10)
-    sql("Update registration SET reg_done = 1.0 Where reg_timestamp={user1.}")
+    #  sql("Update registration SET reg_done = 1.0 Where reg_timestamp={user1.}")
 
 def sql(sql_statement :str)->pd.read_sql:
     username = str(config['credentials']['user'])
