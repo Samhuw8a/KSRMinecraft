@@ -41,10 +41,10 @@ Benutze bitte folgenden Token für deine Registrierung:
 
 Bitte antworte nicht auf diese E-Mail."""
 
-if debug:
-    print("SENDING:")
-    print(reg_mail)
-    print(token)
+#  if debug:
+#      print("SENDING:")
+#      print(reg_mail)
+#      print(token)
 msg=MIMEMultipart()
 msg["From"]    = sender_email
 msg["To"]      = receiver_email
@@ -57,5 +57,5 @@ with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
     server.login(sender_email, password)
     server.sendmail(sender_email, receiver_email, text)
 
-if debug:
-    print("Sent email")
+#  if debug:
+#      print("Sent email")
