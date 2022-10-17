@@ -123,4 +123,5 @@ def main()->None:
 
 if __name__ == '__main__':
     debug = True
-    main()
+    while True:
+	main()
