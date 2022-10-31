@@ -11,8 +11,8 @@ from mcrcon import MCRcon
 debug = sys.argv[1]
 
 reg_username = str(sys.argv[2])
-reg_name = sys.argv[3]
-reg_mail = str(sys.argv[4])
+#reg_name = sys.argv[3]
+#reg_mail = str(sys.argv[4])
 
 file = 'config.ini'
 config = ConfigParser(interpolation=None)
@@ -52,7 +52,9 @@ mcpassword = str(config['credentials']['mcpassword'])
 #      pass
 
 with MCRcon("45.154.49.72", mcpassword) as mcr:
-    resp = mcr.command(f"/whitelist add [{reg_username}]")
+    resp = mcr.command(f"whitelist add {reg_username}")
+    if debug:
+        print(resp)
 
 print('registration_successful')
 

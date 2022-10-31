@@ -77,7 +77,14 @@ def pull_token():
         counter+=1
         if counter >= 10:
             break
-    return str(query()).split()[-1].strip()
+    try:
+        ret=str(query()).split()[-1]
+	#ret.strip()
+        ret = int(ret)	
+    except ValueError:
+        ret = 1
+
+    return ret
 
 ####################################
 
@@ -85,13 +92,13 @@ trial = 0
 
 timeout = time.time() + 5*60 ## time-out after 5 minutes
 while True:
-    if trial == 20 or time.time() > timeout: ## time-out after 3 trials
+    if trial == 10 or time.time() > timeout: ## time-out after 3 trials
         print('timeout or too many trials')
         print('sending tokern_failed.php message')
         print('execute clean_up.py')
         print('token_failed')
         break ## if breaking conditions are met, break loop
-    elif pull_token() == str(float(token)): ## if token is correct, send token_success
+    elif int(pull_token()) == token: ## if token is correct, send token_success
         print('sending success message.php')
         print("continue with registration.py")
         print('token_success')
