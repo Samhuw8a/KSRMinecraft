@@ -38,17 +38,14 @@ def sql(sql_statement :str)->pd.read_sql:
 
 def check_que()->None:
     global que
-    try:
-        if sql('SELECT * FROM registration WHERE reg_done is Null').empty:
-            #if debug == True:
-                #print("que is empty" + "\n" + "going to sleep")
-            que = False
-        else:
-            #if debug == True:
-                #print("df is not empty" +"\n" + "going to work!")
-            que = True
-    except:
-        return "ERROR"
+    if sql('SELECT * FROM registration WHERE reg_done is Null').empty:
+        #if debug == True:
+            #print("que is empty" + "\n" + "going to sleep")
+        que = False
+    else:
+        if debug == True:
+            print("df is not empty" +"\n" + "going to work!")
+        que = True
 
 #  def fetch_first():
 #      return sql('SELECT * FROM registration LIMIT 1')
@@ -66,9 +63,9 @@ class user:
 def fetch_first(is_repeat=False)->None:
     global user1
     if is_repeat:
-        check_str='SELECT reg_username, reg_mail, reg_name, reg_comment, reg_timestamp FROM registration Where reg_done = 2.0 LIMIT 1'
+        check_str='SELECT * FROM registration Where reg_done = 2.0 LIMIT 1'
     else:
-        check_str='SELECT reg_username, reg_mail, reg_name, reg_comment, reg_timestamp FROM registration Where reg_done is Null LIMIT 1'
+        check_str='SELECT * FROM registration Where reg_done is Null LIMIT 1'
     try:
         username = str(sql(check_str)['reg_username']).strip("0 ").partition('\n')[0]
         mail = str(sql(check_str)['reg_mail']).strip("0 ").partition('\n')[0]
@@ -76,6 +73,7 @@ def fetch_first(is_repeat=False)->None:
         comment = str(sql(check_str)['reg_comment']).strip("0 ").partition('\n')[0]
         timestamp = str(sql(check_str)['reg_timestamp']).strip("0 ").partition('\n')[0]
     except:
+        print("Error while acssesing the database")
         return "ERROR"
     mail.strip()
     #name = conv_name(name)
@@ -83,11 +81,9 @@ def fetch_first(is_repeat=False)->None:
     try:
         print(name)
     except:
-        print("ERROR with charcter in the text:")
-        print(mail)
-        sql_no_resp(f"UPDATE registration SET reg_done = 2.0 WHERE reg_mail='{mail}'")
+        print("ERROR with charcter in the text")
     #name = name.lower().replace("ä","ae").replace("ö","oe").replace("ü","ue")
-        return "Text_ERROR"
+        return "ERROR"
     #for i in name:
         #print(i)
 
@@ -96,25 +92,26 @@ def fetch_first(is_repeat=False)->None:
         #print(username,name,mail,comment,timestamp)
         #print("asgf")
     
+async def send_message(info: str)-> str:
+    """Basic websocket client that sends Token information"""
+    uri = str(config['global parameters']['websocket_uri'])
+    async with websockets.connect(uri) as websocket:
+        await websocket.send(info)
+        print(f"sending tocken info: {info}")
+        resp:str =  await websocket.recv()
+        print(f"Server response: {resp}")
+    return resp
 
 def main()->None:
-    #fetch_first()
+    debug=True
+    fetch_first()
     
-    res_que=check_que()
-    if res_que == "ERROR" :
-        print("Error while acssesing the database")
-        time.sleep(6)
-        return
+    check_que()
     if que == True:
-        res=fetch_first()
-
         if debug == True:
             print("start registering...")
-            if res == "ERROR" :
-                print("Error while acssesing the database")
-                time.sleep(6)
-                return
-            if res == "Text_ERROR":
+            if fetch_first() == "ERROR":
+                print("ERROR")
                 time.sleep(6)
                 return
             print(user1)
@@ -154,7 +151,7 @@ def main()->None:
         else:
             if debug == True:
                 print('not an sluz mail!')
-            sql_no_resp(f"UPDATE registration SET reg_done = 2.0 WHERE reg_mail='{user1.mail}'")
+                sql_no_resp(f"UPDATE registration SET reg_done = 2.0 WHERE reg_mail='{user1.mail}'")
         print("subprocess done!")
 
     else:
@@ -163,6 +160,6 @@ def main()->None:
         time.sleep(5)
 
 if __name__ == '__main__':
-    debug=False
+    debug=True
     while True:
         main()
